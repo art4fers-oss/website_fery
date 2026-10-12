@@ -1,0 +1,14 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#1e3a8a"><title>Kontak | Fery Rahmanto, S.Kom.</title><link rel="stylesheet" href="style.css"></head><body>
+<nav class="topbar"><div class="container navin">
+<a class="logo" href="index.html">Fery<span>Tech</span></a>
+<button class="menu-btn" aria-label="Buka menu" aria-expanded="false">☰</button>
+<div class="links">
+<a href="index.html">Home</a><a href="profil.html">Profil</a><a href="keahlian.html">Keahlian</a><a href="pengalaman.html">Pengalaman</a><a href="portofolio.html">Portofolio</a><a href="galeri-siswa.html">Galeri Siswa</a><a href="kontak.html">Kontak</a><a href="admin.html">Admin</a>
+</div></div></nav><main>
+<section class="container"><div class="section-title"><h2>Mari Terhubung</h2><p>Untuk kerja sama, pekerjaan IT, konsultasi jaringan atau kebutuhan digital creative.</p></div>
+<div class="grid"><a class="card" data-whatsapp href="#"><div class="icon">📱</div><h3>WhatsApp / Telepon</h3><p>0812 2257 0583</p></a><a class="card" data-email href="mailto:art4fers@gmail.com"><div class="icon">✉️</div><h3>Email</h3><p data-email>art4fers@gmail.com</p></a><div class="card"><div class="icon">💼</div><h3>Professional</h3><p>IT • Network • Technical Support • Education</p></div></div>
+<div class="card" style="margin-top:25px"><h3 style="margin-bottom:15px">Website & Media</h3><div class="link-list" id="contactLinks"></div></div></section>
+</main><footer><div class="container">© <span class="year-now"></span> <span data-site-name>Fery Rahmanto, S.Kom.</span> — IT, Network & Digital Creative</div></footer>
+<script src="app.js"></script><script>
+document.addEventListener("DOMContentLoaded",()=>{const box=document.getElementById("contactLinks");getLinks().forEach(x=>box.insertAdjacentHTML("beforeend",`<div class="link-item"><b>${esc(x.title)}</b><p>${esc(x.desc||"")}</p><a href="${esc(normalizeUrl(x.url))}" target="_blank" rel="noopener">${esc(x.url)}</a></div>`))});
+</script></body></html>

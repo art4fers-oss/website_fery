@@ -1,0 +1,34 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#1e3a8a"><title>Galeri Siswa | FeryTech</title><link rel="stylesheet" href="style.css"></head><body>
+<nav class="topbar"><div class="container navin">
+<a class="logo" href="index.html">Fery<span>Tech</span></a>
+<button class="menu-btn" aria-label="Buka menu" aria-expanded="false">☰</button>
+<div class="links">
+<a href="index.html">Home</a><a href="profil.html">Profil</a><a href="keahlian.html">Keahlian</a><a href="pengalaman.html">Pengalaman</a><a href="portofolio.html">Portofolio</a><a href="galeri-siswa.html">Galeri Siswa</a><a href="kontak.html">Kontak</a><a href="admin.html">Admin</a>
+</div></div></nav><main>
+<section class="container"><div class="section-title"><div class="kicker">Galeri Siswa</div><h2>Dokumentasi Kegiatan Siswa</h2><p>Foto dan video dapat ditambahkan langsung melalui halaman Admin.</p></div>
+<div class="notice">Pilih kelas, lalu pilih Galeri Foto atau Galeri Video. Video dapat berupa file video atau link YouTube/video langsung.</div><div class="tabs" id="classTabs"><button class="tab-btn" data-class-tab="Kelas 7">Kelas 7</button><button class="tab-btn" data-class-tab="Kelas 8">Kelas 8</button><button class="tab-btn" data-class-tab="Kelas 9">Kelas 9</button><button class="tab-btn" data-class-tab="Kelas 10">Kelas 10</button><button class="tab-btn" data-class-tab="Kelas 11">Kelas 11</button><button class="tab-btn" data-class-tab="Kelas 12">Kelas 12</button></div>
+<div class="tabs"><button class="tab-btn active" data-type-tab="foto">📸 Galeri Foto</button><button class="tab-btn" data-type-tab="video">🎥 Galeri Video</button></div>
+<div class="gallery-grid" id="galleryBox"></div></section>
+</main><footer><div class="container">© <span class="year-now"></span> <span data-site-name>Fery Rahmanto, S.Kom.</span> — IT, Network & Digital Creative</div></footer>
+<script src="app.js"></script><script>
+let currentClass="Kelas 7", currentType="foto";
+function setGalleryClass(c){currentClass=c;renderGallery()}
+function setGalleryType(t){currentType=t;renderGallery()}
+async function renderGallery(){
+ document.querySelectorAll("[data-class-tab]").forEach(b=>b.classList.toggle("active",b.dataset.classTab===currentClass));
+ document.querySelectorAll("[data-type-tab]").forEach(b=>b.classList.toggle("active",b.dataset.typeTab===currentType));
+ const items=(await dbGetAll()).filter(x=>x.className===currentClass&&x.type===currentType);
+ const box=document.getElementById("galleryBox");box.innerHTML="";
+ if(!items.length){box.innerHTML='<div class="empty" style="grid-column:1/-1">Belum ada '+(currentType==="foto"?"foto":"video")+' untuk '+esc(currentClass)+'. Tambahkan melalui halaman Admin.</div>';return}
+ items.sort((a,b)=>b.created-a).forEach(x=>{
+   const url=x.blob?mediaURL(x.blob):normalizeUrl(x.url||"");
+   const media=currentType==="foto"?`<img src="${esc(url)}" alt="${esc(x.title)}">`:videoHTML(x);
+   box.insertAdjacentHTML("beforeend",`<article class="card media-card"><div class="media-thumb">${media}</div><div class="media-body"><h3>${esc(x.title||"Tanpa judul")}</h3><p>${esc(x.desc||"")}</p></div></article>`);
+ });
+}
+document.addEventListener("DOMContentLoaded",async()=>{
+ document.querySelectorAll("[data-class-tab]").forEach(b=>b.addEventListener("click",()=>setGalleryClass(b.dataset.classTab)));
+ document.querySelectorAll("[data-type-tab]").forEach(b=>b.addEventListener("click",()=>setGalleryType(b.dataset.typeTab)));
+ renderGallery()
+});
+</script></body></html>
